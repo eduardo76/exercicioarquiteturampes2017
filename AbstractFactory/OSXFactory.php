@@ -2,7 +2,7 @@
 
 namespace AbstractFactory;
 
-class OSXFactory implements GUIFactory {
+class OSXFactory extends GUIFactory {
 
   public function createButton(): Button {
     return new OSXButton();

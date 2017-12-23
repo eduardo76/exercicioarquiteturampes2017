@@ -2,7 +2,7 @@
 
 namespace AbstractFactory;
 
-class WinFactory implements GUIFactory {
+class WinFactory extends GUIFactory {
 
   public function createButton(): Button {
     return new WinButton();

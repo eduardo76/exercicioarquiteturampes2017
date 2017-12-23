@@ -1,6 +1,6 @@
 <?php
 namespace AbstractFactory;
 
-interface GUIFactory {
-  public function createButton(): Button;
+abstract class GUIFactory {
+  public abstract function createButton(): Button;
 }
