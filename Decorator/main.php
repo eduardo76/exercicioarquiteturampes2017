@@ -10,12 +10,15 @@ class Aluno {
         $this->nome      = $nome;
         $this->telefone  = $telefone;
     }
+
+    public function toString() {
+        return "Aluno [matricula=" . $this->matricula . ", nome=" . $this->nome . ", telefone=" . $this->telefone . "]" . PHP_EOL;
+    }
 }
 
 interface IEscola {
     public function adicionarAluno(Aluno $aluno);
     public function removerAluno(Aluno $aluno);
-    public function printAlunos();
     public function getAlunos();
 }
 
@@ -34,18 +37,14 @@ class Escola implements IEscola {
         }
     }
 
-    public function printAlunos() {
-        echo "" . PHP_EOL;
-        foreach ($this->alunos as $aluno) {
-            echo "Matrícula: " . $aluno->matricula . PHP_EOL;
-            echo "Nome: " . $aluno->nome . PHP_EOL;
-            echo "Telefone: " . $aluno->telefone . PHP_EOL;
-            echo "-------------------------" . PHP_EOL;
-        }
-    }
-
     public function getAlunos() {
         return $this->alunos;
+    }
+
+    public function printAlunos() {
+        foreach ($this->alunos as $aluno) {
+            echo $aluno->toString();
+        }
     }
 }
 
@@ -77,30 +76,51 @@ class EscolaComBusca extends EscolaDecorator {
 
     public function buscar(string $busca) {
         $alunos = $this->getAlunos();
+        $alunosEncontrados = array();
 
         foreach ($alunos as $aluno) {
-            if ($aluno->nome == $busca) {
-                return $aluno;
+            if (strpos($aluno->nome, $busca, 0) === 0) {
+                array_push($alunosEncontrados, $aluno);
             }
         }
+
+        return $alunosEncontrados;
     }
+}
+
+class ListaInvertidaDecorator extends EscolaDecorator {
+
+    public function inverter() {
+        $alunos = $this->getAlunos();
+        return array_reverse($alunos);
+    }
+    
 }
 
 $aluno1 = new Aluno(1, "Fulano", "8888-8888");
 $aluno2 = new Aluno(2, "Cicrano", "9999-9999");
 $aluno3 = new Aluno(3, "Beltrano", "7777-7777");
+$aluno4 = new Aluno(4, "Betania", "5555-5555");
 
 $escola = new Escola();
 
 $escola->adicionarAluno($aluno1);
 $escola->adicionarAluno($aluno2);
 $escola->adicionarAluno($aluno3);
+$escola->adicionarAluno($aluno4);
 
+// Escola com Busca Decorator
 $escolaDecorator = new EscolaComBusca($escola);
+$alunos = $escolaDecorator->buscar("B");
+foreach($alunos as $aluno) {
+    echo $aluno->toString();
+}
 
-$aluno = $escolaDecorator->buscar("Beltrano");
+echo "============================" . PHP_EOL;
 
-echo "-------------------------" . PHP_EOL;
-echo "Matrícula: " . $aluno->matricula . PHP_EOL;
-echo "Nome: " . $aluno->nome . PHP_EOL;
-echo "Telefone: " . $aluno->telefone . PHP_EOL;
+// Escola Invertida Decorator
+$escolaInvertida = new ListaInvertidaDecorator($escola);
+$alunos = $escolaInvertida->inverter("B");
+foreach($alunos as $aluno) {
+    echo $aluno->toString();
+}

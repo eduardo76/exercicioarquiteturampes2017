@@ -31,10 +31,7 @@ class Escola
   public function printAlunos() {
     echo "" . PHP_EOL;
     foreach ($this->alunos as $aluno) {
-      echo "Matrícula: " . $aluno->matricula . PHP_EOL;
-      echo "Nome: " . $aluno->nome . PHP_EOL;
-      echo "Telefone: " . $aluno->telefone . PHP_EOL;
-      echo "-------------------------" . PHP_EOL;
+      $aluno->toString();
     }
   }
 

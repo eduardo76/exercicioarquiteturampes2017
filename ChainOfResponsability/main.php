@@ -1,6 +1,5 @@
 <?php 
 
-
 interface Handler {
     public function nextHandler(Handler $handler);
     public function occorencia(int $nivel);
@@ -16,7 +15,7 @@ class Monitor implements Handler {
 
     public function occorencia(int $nivel) {
         if ($nivel <= 1) {
-            echo "Monitor" . PHP_EOL;
+            echo "Monitor resolve" . PHP_EOL;
         } else {
             $this->handler->occorencia($nivel);
         }
@@ -32,7 +31,7 @@ class Professor implements Handler {
 
     public function occorencia(int $nivel) {
         if ($nivel <= 2) {
-            echo "Professor" . PHP_EOL;
+            echo "Professor resolve" . PHP_EOL;
         } else {
             $this->handler->occorencia($nivel);
         }
@@ -48,7 +47,7 @@ class Coordenador implements Handler {
 
     public function occorencia(int $nivel) {
         if ($nivel <= 3) {
-            echo "Coordenador" . PHP_EOL;
+            echo "Coordenador resolve" . PHP_EOL;
         } else {
             $this->handler->occorencia($nivel);
         }
@@ -64,7 +63,7 @@ class Diretor implements Handler {
 
     public function occorencia(int $nivel) {
         if ($nivel <= 4) {
-            echo "Diretor" . PHP_EOL;
+            echo "Diretor resolve" . PHP_EOL;
         } else {
             $this->handler->occorencia($nivel);
         }
@@ -80,4 +79,7 @@ $monitor->nextHandler($professor);
 $professor->nextHandler($coordenador);
 $coordenador->nextHandler($diretor);
 
+$monitor->occorencia(1);
+$monitor->occorencia(2);
 $monitor->occorencia(3);
+$monitor->occorencia(4);

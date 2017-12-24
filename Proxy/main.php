@@ -2,7 +2,7 @@
 
 
 interface IBiblioteca {
-    public function consultarLivro($numero);
+    public function consultarLivro(int $numero);
     public function retirarLivro(Livro $livro);
     public function devolverLivro(Livro $livro);
 }
@@ -15,7 +15,7 @@ class AssitenteBiblioteca implements IBiblioteca {
         $this->novaBiblioteca();
     }
 
-    public function consultarLivro($numero) {
+    public function consultarLivro(int $numero) {
         if ($this->biblioteca == null) {
             $this->novaBiblioteca();
         }
@@ -55,7 +55,7 @@ class Biblioteca implements IBiblioteca {
         //
     }
 
-    public function consultarLivro($numero) {
+    public function consultarLivro(int $numero) {
         if ($numero <= count($this->livros)) {
             $livro = $this->livros[$numero];
             echo "Livro consultado: " . $numero . " - " . $livro->getTitulo() . PHP_EOL;
@@ -81,11 +81,9 @@ class Biblioteca implements IBiblioteca {
     }
     
     public function toString() {
-        echo "===========================" . PHP_EOL;
         foreach ($this->livros as $indice => $livro) {
-            echo $indice . " - Titulo: " . $livro->getTitulo() . " | Autor: " . $livro->getAutor() . PHP_EOL;
+            echo $indice . " - " . $livro->getAutorETitulo() . PHP_EOL;
         }
-        echo "===========================" . PHP_EOL;
     }
 }
 
@@ -107,7 +105,8 @@ class Livro {
     }
     public function getAutorETitulo() {
       return $this->getTitulo() . " por " . $this->getAutor();
-    }    
+    }
+    
 }
 
 

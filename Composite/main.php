@@ -2,39 +2,24 @@
 
 interface Graphic {
     public function draw();
-    public function add(Graphic $graphic);
-    public function remove(Graphic $graphic);
-    public function getChild(int $int): Graphic;
 }
 
 class Line implements Graphic {
     public function draw(){
         echo "Desenhando uma Linha." . PHP_EOL;
     }
-    
-    public function add(Graphic $graphic) {}
-    public function remove(Graphic $graphic) {}
-    public function getChild(int $int): Graphic {}
 }
 
 class Rectangle implements Graphic {
     public function draw(){
         echo "Desenhando um Retangulo." . PHP_EOL;
     }
-
-    public function add(Graphic $graphic) {}
-    public function remove(Graphic $graphic) {}
-    public function getChild(int $int): Graphic {}
 }
 
 class Text implements Graphic {
     public function draw(){
         echo "Desenhando um Text." . PHP_EOL;
     }
-
-    public function add(Graphic $graphic) {}
-    public function remove(Graphic $graphic) {}
-    public function getChild(int $int): Graphic {}
 }
 
 class Picture implements Graphic {

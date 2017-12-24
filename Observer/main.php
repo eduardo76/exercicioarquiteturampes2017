@@ -10,12 +10,16 @@ class Aluno {
         $this->nome      = $nome;
         $this->telefone  = $telefone;
     }
+
+    public function toString() {
+        return "Aluno [matricula=" . $this->matricula . ", nome=" . $this->nome . ", telefone=" . $this->telefone . "]" . PHP_EOL;
+    }
 }
 
 interface ISubject {
     public function attach(IObserver $observer);
     public function detach(IObserver $observer);
-    public function notify(string $string);
+    public function notify(string $motivo);
 }
 
 class Escola implements ISubject {
@@ -74,7 +78,13 @@ interface IObserver {
 
 class Biblioteca implements IObserver {
     public function update(string $motivo) {
-        echo $motivo . PHP_EOL;
+        echo "Biblioteca: " .$motivo . PHP_EOL;
+    }
+}
+
+class Catraca implements IObserver {
+    public function update(string $motivo) {
+        echo "Catraca: " . $motivo . PHP_EOL;
     }
 }
 
@@ -85,13 +95,15 @@ $aluno3     = new Aluno(3, "Beltrano", "7777-7777");
 
 $escola     = new Escola();
 $biblioteca = new Biblioteca();
+$catraca    = new Catraca();
 
 $escola->attach($biblioteca);
 $escola->attach($biblioteca);
+$escola->attach($catraca);
 
 $escola->adicionarAluno($aluno1);
 $escola->adicionarAluno($aluno2);
 $escola->adicionarAluno($aluno3);
 
-$escola->removerAluno($aluno2, "Cai fora!");
+$escola->removerAluno($aluno2, "Remova Aluno");
 

@@ -13,4 +13,9 @@ class Aluno
     $this->nome      = $nome;
     $this->telefone  = $telefone;
   }
+
+  public function toString() {
+    return "Aluno [matricula=" . $this->matricula . ", nome=" . $this->nome . ", telefone=" . $this->telefone . "]" . PHP_EOL;
+  }
+  
 }

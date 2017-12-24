@@ -23,10 +23,7 @@ class Aluno {
     }
 
     public function toString() {
-        echo "Matrícula: " . $this->matricula . PHP_EOL;
-        echo "Nome: " . $this->nome . PHP_EOL;
-        echo "Telefone: " . $this->telefone . PHP_EOL;
-        echo "-------------------------" . PHP_EOL;
+        return "Aluno [matricula=" . $this->matricula . ", nome=" . $this->nome . ", telefone=" . $this->telefone . "]" . PHP_EOL;
     }
 }
 
@@ -49,10 +46,7 @@ class Escola implements Aggregate {
     public function printAlunos() {
         echo "" . PHP_EOL;
         foreach ($this->alunos as $aluno) {
-            echo "Matrícula: " . $aluno->matricula . PHP_EOL;
-            echo "Nome: " . $aluno->nome . PHP_EOL;
-            echo "Telefone: " . $aluno->telefone . PHP_EOL;
-            echo "-------------------------" . PHP_EOL;
+            $aluno->toString();
         }
     }
 
@@ -107,21 +101,21 @@ $escola->adicionarAluno($aluno3);
 $escolaIterator = $escola->createIterator();
 
 $aluno = $escolaIterator->first();
-$aluno->toString();
+echo $aluno->toString();
 
 $aluno = $escolaIterator->next();
-$aluno->toString();
+echo $aluno->toString();
 
 $aluno = $escolaIterator->current();
-$aluno->toString();
+echo $aluno->toString();
 
 $aluno = $escolaIterator->next();
-$aluno->toString();
+echo $aluno->toString();
 
 $aluno = $escolaIterator->first();
-$aluno->toString();
+echo $aluno->toString();
 
 while (!$escolaIterator->isDone()) {
     $aluno = $escolaIterator->next();
-    $aluno->toString();
+    echo $aluno->toString();
 }
