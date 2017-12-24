@@ -31,7 +31,7 @@ class Escola
   public function printAlunos() {
     echo "" . PHP_EOL;
     foreach ($this->alunos as $aluno) {
-      $aluno->toString();
+      echo $aluno->toString();
     }
   }
 

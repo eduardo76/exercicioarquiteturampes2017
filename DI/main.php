@@ -4,22 +4,9 @@ require "vendor/autoload.php";
 
 use DI\ContainerBuilder;
 
+
 interface ILogger {
     public function log(string $texto);
-}
-
-class ConsoleLogger implements ILogger {
-
-    public function log(string $texto) {
-        echo "Console: " . $texto . PHP_EOL;
-    }
-}
-
-class ArquivoLogger implements ILogger {
-
-    public function log(string $texto) {
-        echo "Arquivo: " . $texto . PHP_EOL;
-    }
 }
 
 class Aluno {
@@ -38,11 +25,11 @@ class Aluno {
     }
 }
 
-class Escola{
+class Escola {
     public $alunos = array();
     public $logger;
 
-    public function __construct(ConsoleLogger $logger) {
+    public function __construct(ILogger $logger) {
         $this->logger = $logger;
     }
 
@@ -73,21 +60,37 @@ class Escola{
 }
 
 
+class ArquivoLogger implements ILogger {
+
+    public function log(string $texto) {
+        echo "Arquivo: " . $texto . PHP_EOL;
+    }
+}
+
+class ConsoleLogger implements ILogger {
+
+    public function log(string $texto) {
+        echo "Console: " . $texto . PHP_EOL;
+    }
+}
+
 class EscolaLogTeste {
     public $escola;
     public $consoleLogger;
     public $arquivoLogger;
 
     public static function executar() {
-        $container = ContainerBuilder::buildDevContainer();
 
-        $consoleLogger  = $container->get(ConsoleLogger::class);
-        $escola         = $container->get(Escola::class);
+        // Aqui está sendo usado o PHP-DI, dependency injection container, que controla a injeção de dependência
+        // Pode ser encontrado em: http://php-di.org/
+        $container = ContainerBuilder::buildDevContainer();
+        $container->set(ILogger::class, \DI\object(ConsoleLogger::class)); // Mapeia a interface para a classe concreta
+
+        $escola = $container->get(Escola::class);
 
         $aluno1 = new Aluno(1, "Fulano", "8888-8888");
         $aluno2 = new Aluno(2, "Cicrano", "9999-9999");
         $aluno3 = new Aluno(3, "Beltrano", "7777-7777");
-        // $escola->logar();
 
         $escola->adicionarAluno($aluno1);
         $escola->adicionarAluno($aluno2);
@@ -105,6 +108,7 @@ class Main {
 
     public static function rodar() {
         EscolaLogTeste::executar();
+        // $escola = new EscolaLogTeste();
     }
 
 }
