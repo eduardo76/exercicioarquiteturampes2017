@@ -3,8 +3,8 @@
         "php-di/php-di": "^5.4"
     },
     "autoload": {
-      "classmap": [
-        "."
-      ]
+      "psr-4": {
+        "DependencyInjection\\":"./"
+      }
     }
 }
