@@ -1,6 +1,6 @@
 <?php
 
-namespace DI;
+namespace DependencyInjection;
 
 class ArquivoLogger implements ILogger {
 
